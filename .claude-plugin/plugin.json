@@ -1,0 +1,12 @@
+{
+  "name": "plumbline",
+  "description": "Verification infrastructure for AI-assisted work. Generates verification contracts before implementation, verifies results after.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Emilio Carrion"
+  },
+  "homepage": "https://github.com/EmilioCarrion/plumbline",
+  "repository": "https://github.com/EmilioCarrion/plumbline",
+  "license": "MIT",
+  "keywords": ["verification", "contracts", "quality", "testing", "code-review", "skills"]
+}
