@@ -1,0 +1,18 @@
+{
+  "name": "plumbline",
+  "description": "Verification infrastructure for AI-assisted work",
+  "owner": {
+    "name": "Emilio Carrion"
+  },
+  "plugins": [
+    {
+      "name": "plumbline",
+      "description": "Verification infrastructure for AI-assisted work. Generates verification contracts before implementation, verifies results after.",
+      "version": "0.1.0",
+      "source": "./",
+      "author": {
+        "name": "Emilio Carrion"
+      }
+    }
+  ]
+}
