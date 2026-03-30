@@ -38,7 +38,7 @@ Gather sources in this order. Each source builds on the previous:
 - Use Grep to find code related to the task's domain keywords
 - Read relevant files to understand existing patterns
 
-**Fallback:** If empty project (no source files), skip codebase analysis. Note in contract context that this is a greenfield project.
+**Fallback:** If no build system or source files found, skip codebase analysis. This likely indicates a content or planning task — context gathering should focus on project docs, domain research, and user conversation.
 
 ## Source: Issue/Ticket
 

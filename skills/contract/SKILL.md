@@ -60,6 +60,8 @@ For each check, decide if it's `[auto]` or `[manual]`:
 
 **Bias toward `[auto]`.** The verifying agent can read, compare, count, search, and analyze structure — not just run shell commands. Reserve `[manual]` for checks where the answer is genuinely a matter of taste or perception, not analysis.
 
+**Structural vs. semantic checks:** For structural properties (word counts, section presence, table row counts), use command-based auto checks (`grep`, `wc`). For semantic properties (whether content recommends something, whether an explanation is adequate, whether facts are correct), use analytical auto checks (`<!-- verify: read [section] and determine whether [criterion] -->`) or web-verified auto checks (`<!-- verify: web-verify: [instruction] -->`). Do not use grep to verify meaning — grep matches syntax, not semantics.
+
 For each `[manual]` check, generate an inline rubric that makes the subjective judgment evaluable. The rubric uses a 1-4 scale with an acceptance threshold:
 
 ```markdown

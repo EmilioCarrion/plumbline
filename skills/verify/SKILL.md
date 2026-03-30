@@ -53,10 +53,11 @@ For each `[auto]` check:
 
 1. Extract the execution hint from the HTML comment (`<!-- verify: ... -->`)
 2. Announce what you're checking: "Checking: <description>"
-3. Translate the execution hint into concrete tool invocations and execute them. Every conclusion must be backed by tool output — never infer results from reading or perception alone.
+3. Translate the execution hint into concrete tool invocations and execute them. Auto checks can use any available tool: shell commands, file reading, Grep, Glob, WebSearch, or any MCP tool. Hints prefixed with `web-verify:` should use WebSearch to validate facts against external sources. Every conclusion must be backed by tool output — never infer results from reading or perception alone.
 4. Evaluate the result:
    - **Pass:** The tool output confirms the check (e.g., expected HTTP status, no grep matches for forbidden patterns, tests pass)
    - **Fail:** The tool output contradicts the check. Record the evidence (tool + output)
+   - **Skipped:** The check cannot be executed in this environment (e.g., required tool not installed, service unavailable). Record the reason. A skipped check does not count as a failure but is tracked separately in the report.
    - **Inconclusive:** The tool errored or the output is ambiguous. Treat as fail, note the ambiguity
 
 ### Analytical auto checks
@@ -74,7 +75,7 @@ Some auto checks verify structural or positional properties of content (e.g., "X
 
 ## Step 3: Collect Manual Checks
 
-For each `[manual]` check:
+Present the first `[manual]` check one-by-one:
 
 1. Present the check description
 2. If the check has an inline rubric (`<!-- rubric: ... -->`), display the rubric levels and threshold to the user
@@ -82,6 +83,11 @@ For each `[manual]` check:
 4. Record the score and note. The check passes if the score meets or exceeds the threshold.
 
 If the check has no rubric, fall back to: "Does this pass? (yes/no) Add a note if you'd like."
+
+**Batch mode:** After presenting the first manual check, if there are remaining manual checks, offer batch mode:
+> "There are <N> more manual checks. Want to score them in batch? I'll list them all with their rubrics, and you can respond like: `2:3, 3:4, 4:2 "note"`. Or we can continue one-by-one."
+
+If the user chooses batch mode, present all remaining manual checks with their rubrics in a single message and parse the batch response. If one-by-one, continue the sequential flow.
 
 If the user wants to skip a manual check, mark it as fail with note "Skipped by user".
 

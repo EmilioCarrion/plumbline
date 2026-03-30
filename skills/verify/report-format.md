@@ -17,6 +17,7 @@ verified: YYYY-MM-DD
 verdict: pass | fail
 auto_passed: N
 auto_total: M
+auto_skipped: N
 manual_passed: N
 manual_total: M
 ---
@@ -25,8 +26,9 @@ manual_total: M
 **Fields:**
 - `contract` (required): Filename of the contract this report verifies
 - `verified` (required): Date verification was run
-- `verdict` (required): `pass` if all checks passed, `fail` if any check failed
-- `auto_passed` / `auto_total` (required): Count of auto checks passed vs total
+- `verdict` (required): `pass` if all checks passed, `fail` if any check failed. Skipped checks do not count as failures.
+- `auto_passed` / `auto_total` (required): Count of auto checks passed vs total (excluding skipped)
+- `auto_skipped` (required): Count of auto checks that could not be executed. 0 if none.
 - `manual_passed` / `manual_total` (required): Count of manual checks passed vs total
 
 ### Markdown Body
@@ -35,11 +37,15 @@ manual_total: M
 # Verification Report: <task description>
 
 ## Summary
-<N> auto checks passed out of <M>. <N> manual checks passed out of <M>.
+<N> auto checks passed out of <M>. <N> skipped. <N> manual checks passed out of <M>.
 
 ## Passed Checks
 - [x] `[auto]` Description of passing check
 - [x] `[manual]` Description of passing check
+
+## Skipped Checks
+- [ ] `[auto]` Description of skipped check
+  **Reason:** Why the check could not be executed (e.g., "markdownlint-cli not available — no Node.js in environment").
 
 ## Failed Checks
 
