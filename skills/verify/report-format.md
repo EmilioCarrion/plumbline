@@ -48,6 +48,7 @@ manual_total: M
 **Command:** The command that was run (for auto checks).
 
 ### [manual] Description of failing check
+**Score:** <N>/4 (threshold: <T>)
 **Note:** The user's explanation of why it failed.
 
 ## Next Steps

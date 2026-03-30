@@ -53,11 +53,22 @@ For each `[auto]` check:
 
 1. Extract the execution hint from the HTML comment (`<!-- verify: ... -->`)
 2. Announce what you're checking: "Checking: <description>"
-3. Execute the instruction using the appropriate tool (Bash for commands, Grep for file searches, Read for file inspection, etc.)
+3. Translate the execution hint into concrete tool invocations and execute them. Every conclusion must be backed by tool output — never infer results from reading or perception alone.
 4. Evaluate the result:
-   - **Pass:** The command output confirms the check (e.g., expected HTTP status, no grep matches for forbidden patterns, tests pass)
-   - **Fail:** The command output contradicts the check. Record the evidence (command + output)
-   - **Inconclusive:** The command errored or the output is ambiguous. Treat as fail, note the ambiguity
+   - **Pass:** The tool output confirms the check (e.g., expected HTTP status, no grep matches for forbidden patterns, tests pass)
+   - **Fail:** The tool output contradicts the check. Record the evidence (tool + output)
+   - **Inconclusive:** The tool errored or the output is ambiguous. Treat as fail, note the ambiguity
+
+### Analytical auto checks
+
+Some auto checks verify structural or positional properties of content (e.g., "X appears after the first third", "both files have equivalent structure", "the document explains concept Y, not just mentions it"). These are still `[auto]` — but you MUST verify them with tools, not perception:
+
+- **Position/proportion:** Use `wc -w` for total word count, `grep -n` for line position, `awk` to calculate ratios. Never estimate position by reading.
+- **Counting:** Use `wc`, `grep -c`, or equivalent. Never count by reading.
+- **Structural comparison:** Use `grep` to extract headers from both files, then compare. Never rely on memory of what you read.
+- **Content presence vs. mention:** Use `grep -A` to extract the surrounding context of a term, then verify the context constitutes an explanation (defines or describes), not just a reference. This is the one case where reading the grep output to evaluate is acceptable — but the extraction itself must use a tool.
+
+**The rule:** if you can measure it, measure it. Tool output is evidence. Agent perception is opinion.
 
 **Short-circuit rule:** If a check in Contextual Verification named something like "Existing tests still pass" fails, announce the failure and ask the user whether to continue with remaining checks or stop. The remaining results may be unreliable if foundational checks fail.
 
@@ -65,9 +76,12 @@ For each `[auto]` check:
 
 For each `[manual]` check:
 
-1. Present the check description and any guidance text
-2. Ask the user: "Does this pass? (yes/no) Add a note if you'd like."
-3. Record their response
+1. Present the check description
+2. If the check has an inline rubric (`<!-- rubric: ... -->`), display the rubric levels and threshold to the user
+3. Ask the user to score the check: "Score this 1-4 (threshold: <N>). Add a note if you'd like."
+4. Record the score and note. The check passes if the score meets or exceeds the threshold.
+
+If the check has no rubric, fall back to: "Does this pass? (yes/no) Add a note if you'd like."
 
 If the user wants to skip a manual check, mark it as fail with note "Skipped by user".
 

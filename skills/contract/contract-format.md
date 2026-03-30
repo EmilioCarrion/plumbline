@@ -67,8 +67,28 @@ Checks that verify the change works in the real system context.
 
 Each check is a Markdown checkbox list item with a type tag:
 
-- **`[auto]`** — Can be verified by executing a command or instruction. The execution hint is an HTML comment on the next line: `<!-- verify: <instruction> -->`. The instruction can be a shell command, an API call description, or a file inspection instruction.
-- **`[manual]`** — Requires human judgment. May include guidance text after the description.
+- **`[auto]`** — Can be verified by an agent: executing a command, reading and analyzing content, comparing documents, checking structure, or any other deterministic evaluation. The execution hint is an HTML comment on the next line: `<!-- verify: <instruction> -->`. The instruction can be a shell command, an API call, a file inspection, or an analytical instruction the agent can follow (e.g., "read both files and verify equivalent section structure").
+- **`[manual]`** — Requires human aesthetic or subjective judgment that an agent cannot reliably evaluate (tone, rhetorical impact, memorability). Must include an inline rubric as an HTML comment with a 1-4 scale and acceptance threshold.
+
+### Manual Check Rubric Format
+
+Every `[manual]` check includes an inline rubric:
+
+```markdown
+- [ ] `[manual]` Description of check
+  <!-- rubric:
+  4: <excellent — specific, observable description>
+  3: <good — specific, observable description>
+  2: <below bar — specific, observable description>
+  1: <unacceptable — specific, observable description>
+  threshold: 3
+  -->
+```
+
+- Each level describes observable characteristics, not feelings
+- Levels must be concrete and distinguishable from each other
+- The threshold is the minimum score to pass (typically 3)
+- During verification, the user scores the check against the rubric and optionally adds a note
 
 ## Naming Convention
 

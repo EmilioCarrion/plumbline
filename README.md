@@ -28,14 +28,22 @@ Plumbline analyzes your project — docs, codebase, conventions, linked issues �
 
 ## Craft Verification
 - [ ] `[auto]` Auth logic lives in service layer, not in route handler
+- [ ] `[auto]` First mention of the new module appears after the architectural context is established
 - [ ] `[manual]` Naming follows existing codebase conventions
+  <!-- rubric:
+  4: All new symbols match naming patterns in adjacent files
+  3: Consistent casing, minor stylistic deviation
+  2: Some symbols use inconsistent casing
+  1: Multiple naming convention violations
+  threshold: 3
+  -->
 
 ## Contextual Verification
 - [ ] `[auto]` All existing tests still pass
 - [ ] `[manual]` Latency impact assessed for auth middleware in hot path
 ```
 
-Every check is tagged `[auto]` (executable by agents) or `[manual]` (requires human judgment). Auto checks include execution hints that agents can run directly.
+Every check is tagged `[auto]` (executable by agents) or `[manual]` (requires human judgment). Auto checks include execution hints — from shell commands to structural analysis that agents verify with tools. Manual checks include inline rubrics with a 1-4 scale, so evaluation is consistent and actionable rather than a subjective yes/no.
 
 ### 2. Verify — check whether you got there
 

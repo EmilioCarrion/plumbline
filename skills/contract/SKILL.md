@@ -54,15 +54,34 @@ Minimum: 2 questions. Maximum: 5. Stop when dimensions are sufficiently covered.
 Read the contract format reference: `skills/contract/contract-format.md`
 
 For each check, decide if it's `[auto]` or `[manual]`:
-- **`[auto]`** if the check can be verified by running a command, calling an API, grepping files, running tests, or any other executable action. Include the execution hint as an HTML comment.
-- **`[manual]`** if the check requires human judgment (visual inspection, subjective quality, UX assessment). Include guidance text when helpful.
+- **`[auto]`** if the check can be verified by an agent using tools — this includes running commands, grepping files, running tests, but also measuring structural or positional properties of content (e.g., word counts, position of first mention, header comparison between files). The key: the verification must produce tool output as evidence, not rely on the agent's perception. If an agent can measure it and deterministically answer yes/no from the measurement, it's `[auto]`. Include the execution hint as an HTML comment — for analytical checks, the hint must describe the tool-based measurement (e.g., "use wc -w for total count, grep -n to find first mention, calculate ratio"), not just the question to answer.
+- **`[manual]`** if the check requires human aesthetic or subjective judgment that an agent cannot reliably evaluate (e.g., "the tone feels right", "the closing is rhetorically powerful", "the phrasing is memorable"). The test: could two reasonable people disagree on whether it passes? If yes, it's `[manual]`.
 
-**Bias toward `[auto]`.** If there's any way to make a check executable, do it. Reserve `[manual]` for checks that genuinely require human perception or judgment.
+**Bias toward `[auto]`.** The verifying agent can read, compare, count, search, and analyze structure — not just run shell commands. Reserve `[manual]` for checks where the answer is genuinely a matter of taste or perception, not analysis.
+
+For each `[manual]` check, generate an inline rubric that makes the subjective judgment evaluable. The rubric uses a 1-4 scale with an acceptance threshold:
+
+```markdown
+- [ ] `[manual]` Description of check
+  <!-- rubric:
+  4: <excellent — specific description>
+  3: <good — specific description>
+  2: <below bar — specific description>
+  1: <unacceptable — specific description>
+  threshold: 3
+  -->
+```
+
+Rubric guidelines:
+- Each level must be concrete and distinguishable — avoid vague qualifiers like "good" vs "very good"
+- The threshold is the minimum score to pass (typically 3)
+- Levels should describe observable characteristics, not feelings (e.g., "reader can follow the argument without referencing external material" not "feels clear")
 
 Guidelines for good checks:
 - Each check is independently verifiable — no check depends on another passing first
 - Checks are specific, not vague: "POST /auth/login returns 401 with invalid credentials" not "authentication works"
 - Auto execution hints are complete commands that an agent can run without modification
+- Manual checks include inline rubrics with concrete, distinguishable levels
 - Aim for 5-15 checks total across all three dimensions
 
 ## Step 4: User Reviews Contract

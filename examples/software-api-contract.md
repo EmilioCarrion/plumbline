@@ -36,6 +36,13 @@ The application needs a login endpoint that authenticates users with email/passw
 - [ ] `[auto]` Route handler is under 20 lines
   <!-- verify: awk '/login/,/^}/' src/routes/auth.ts | wc -l -->
 - [ ] `[manual]` Naming follows existing codebase conventions (camelCase, descriptive)
+  <!-- rubric:
+  4: All new symbols (functions, variables, types) follow camelCase, are descriptive, and match naming patterns in adjacent files
+  3: All new symbols follow camelCase and are descriptive, minor stylistic deviation from adjacent code
+  2: Some symbols use inconsistent casing or unclear names
+  1: Multiple naming convention violations or cryptic abbreviations
+  threshold: 3
+  -->
 
 ## Contextual Verification
 - [ ] `[auto]` All existing tests still pass
@@ -43,4 +50,18 @@ The application needs a login endpoint that authenticates users with email/passw
 - [ ] `[auto]` New endpoint has test coverage
   <!-- verify: npm test -- --testPathPattern="auth" --verbose 2>&1 | grep -E "PASS|FAIL|Tests:" -->
 - [ ] `[manual]` Error responses don't leak internal details (stack traces, DB errors)
+  <!-- rubric:
+  4: All error responses return generic messages, no internal identifiers or paths visible
+  3: Error responses are generic, at most a request ID is exposed (acceptable for debugging)
+  2: Some error responses include internal service names or partial stack info
+  1: Full stack traces or database error messages visible in responses
+  threshold: 3
+  -->
 - [ ] `[manual]` JWT secret is loaded from environment variable, not config file
+  <!-- rubric:
+  4: Secret loaded from env var, with validation that it's set at startup, documented in .env.example
+  3: Secret loaded from env var with validation that it's set at startup
+  2: Secret loaded from env var but no validation — app silently uses empty/undefined secret
+  1: Secret hardcoded or loaded from checked-in config file
+  threshold: 3
+  -->
