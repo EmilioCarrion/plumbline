@@ -46,9 +46,7 @@ The application needs a login endpoint that authenticates users with email/passw
 
 ## Contextual Verification
 - [ ] `[auto]` All existing tests still pass
-  <!-- verify: npm test -->
 - [ ] `[auto]` New endpoint has test coverage
-  <!-- verify: npm test -- --testPathPattern="auth" --verbose 2>&1 | grep -E "PASS|FAIL|Tests:" -->
 - [ ] `[manual]` Error responses don't leak internal details (stack traces, DB errors)
   <!-- rubric:
   4: All error responses return generic messages, no internal identifiers or paths visible

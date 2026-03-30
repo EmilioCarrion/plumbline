@@ -34,7 +34,7 @@ graph LR
 
 Plumbline analyzes your project — docs, codebase, conventions, linked issues — and produces a verification contract. Every check is tagged `[auto]` or `[manual]`:
 
-- **`[auto]`** checks are executable by agents — shell commands, structural analysis, content measurement. Tool output is evidence.
+- **`[auto]`** checks are verifiable by agents — shell commands, structural analysis, content evaluation, web search. Execution hints are optional guidance, not required.
 - **`[manual]`** checks require human judgment and include inline rubrics (1–4 scale) so evaluation is consistent, not a subjective yes/no.
 
 ```markdown

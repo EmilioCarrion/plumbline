@@ -8,7 +8,7 @@
     {
       "name": "plumbline",
       "description": "Verification infrastructure for AI-assisted work. Generates verification contracts before implementation, verifies results after.",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "source": "./",
       "author": {
         "name": "Emilio Carrion"

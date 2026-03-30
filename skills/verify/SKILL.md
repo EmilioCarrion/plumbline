@@ -51,7 +51,7 @@ Read the contract format reference for check structure: `skills/contract/contrac
 
 For each `[auto]` check:
 
-1. Extract the execution hint from the HTML comment (`<!-- verify: ... -->`)
+1. Check for an execution hint (`<!-- verify: ... -->`). If present, use it as guidance. If absent, determine the verification approach from the criterion itself and available tools.
 2. Announce what you're checking: "Checking: <description>"
 3. Translate the execution hint into concrete tool invocations and execute them. Auto checks can use any available tool: shell commands, file reading, Grep, Glob, WebSearch, or any MCP tool. Hints prefixed with `web-verify:` should use WebSearch to validate facts against external sources. Every conclusion must be backed by tool output — never infer results from reading or perception alone.
 4. Evaluate the result:
@@ -93,14 +93,14 @@ If the user wants to skip a manual check, mark it as fail with note "Skipped by 
 
 ## Step 4: Produce Report
 
-Read the report format reference: `skills/verify/report-format.md`
+Read and follow the report format exactly as defined in `skills/verify/report-format.md`. The report MUST include all YAML frontmatter fields and the section structure specified there.
 
 1. Compile all results into the report format
 2. Calculate the verdict: `pass` if all checks passed, `fail` otherwise
 3. Write to `.plumbline/contracts/<name>-report.md`
-4. Update the contract's frontmatter `status` field:
-   - All checks passed → `status: verified`
-   - Any check failed → `status: failed`
+4. Update the contract's frontmatter:
+   - Set `status`: `verified` (all passed) or `failed` (any failed)
+   - Add `report: <name>-report.md` linking to the generated report
 
 ## Step 5: Present Results
 

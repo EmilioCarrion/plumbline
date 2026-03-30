@@ -17,6 +17,8 @@ Generating is easy. Verifying is the work. This skill makes verification criteri
 - When you need to define acceptance criteria beyond what's in the issue
 - When you want to make implicit quality standards explicit
 
+Plumbline works for any task with verifiable criteria — software, content, planning, analysis. For non-code tasks, codebase analysis is skipped automatically; context gathering focuses on project docs, domain research, and user conversation.
+
 ## Checklist
 
 You MUST complete these steps in order:
@@ -55,14 +57,14 @@ Minimum: 2 questions. Maximum: 5. Stop when dimensions are sufficiently covered.
 Read the contract format reference: `skills/contract/contract-format.md`
 
 For each check, decide if it's `[auto]` or `[manual]`:
-- **`[auto]`** if the check can be verified by an agent using tools — this includes running commands, grepping files, running tests, but also measuring structural or positional properties of content (e.g., word counts, position of first mention, header comparison between files). The key: the verification must produce tool output as evidence, not rely on the agent's perception. If an agent can measure it and deterministically answer yes/no from the measurement, it's `[auto]`. Include the execution hint as an HTML comment — for analytical checks, the hint must describe the tool-based measurement (e.g., "use wc -w for total count, grep -n to find first mention, calculate ratio"), not just the question to answer.
+- **`[auto]`** if the check can be verified by an agent using tools — this includes running commands, grepping files, running tests, but also measuring structural or positional properties of content (e.g., word counts, position of first mention, header comparison between files), reading and evaluating content analytically, or searching the web for factual verification. The key: the verification must produce tool output as evidence, not rely on the agent's perception. A `<!-- verify: ... -->` execution hint is optional — include one when the verification approach is non-obvious or when you want to specify an exact command. If included, it must be a command, analytical instruction, or web-verify query (see contract-format.md).
 - **`[manual]`** if the check requires human aesthetic or subjective judgment that an agent cannot reliably evaluate (e.g., "the tone feels right", "the closing is rhetorically powerful", "the phrasing is memorable"). The test: could two reasonable people disagree on whether it passes? If yes, it's `[manual]`.
 
 **Bias toward `[auto]`.** The verifying agent can read, compare, count, search, and analyze structure — not just run shell commands. Reserve `[manual]` for checks where the answer is genuinely a matter of taste or perception, not analysis.
 
-**Structural vs. semantic checks:** For structural properties (word counts, section presence, table row counts), use command-based auto checks (`grep`, `wc`). For semantic properties (whether content recommends something, whether an explanation is adequate, whether facts are correct), use analytical auto checks (`<!-- verify: read [section] and determine whether [criterion] -->`) or web-verified auto checks (`<!-- verify: web-verify: [instruction] -->`). Do not use grep to verify meaning — grep matches syntax, not semantics.
+**Structural vs. semantic checks:** For structural properties (word counts, section presence, table row counts), command-based hints add precision. For semantic properties (whether content recommends something, whether an explanation is adequate, whether facts are correct), the criterion itself is usually sufficient — the verify agent will read and evaluate, or use web search. Do not use grep to verify meaning — grep matches syntax, not semantics.
 
-For each `[manual]` check, generate an inline rubric that makes the subjective judgment evaluable. The rubric uses a 1-4 scale with an acceptance threshold:
+Every `[manual]` check MUST include an inline rubric. If you cannot define a meaningful 1-4 scale for a check, it should be a binary `[auto]` (analytical) check instead. Generate an inline rubric that makes the subjective judgment evaluable. The rubric uses a 1-4 scale with an acceptance threshold:
 
 ```markdown
 - [ ] `[manual]` Description of check
@@ -83,9 +85,11 @@ Rubric guidelines:
 Guidelines for good checks:
 - Each check is independently verifiable — no check depends on another passing first
 - Checks are specific, not vague: "POST /auth/login returns 401 with invalid credentials" not "authentication works"
-- Auto execution hints are complete commands that an agent can run without modification
+- Auto execution hints, when included, must be actionable (command, analytical instruction, or web-verify query)
 - Manual checks include inline rubrics with concrete, distinguishable levels
 - Aim for 5-15 checks total across all three dimensions
+
+**Required frontmatter fields:** The generated contract MUST include all frontmatter fields defined in contract-format.md, including `status: pending`. Do not omit any field.
 
 ## Step 4: User Reviews Contract
 

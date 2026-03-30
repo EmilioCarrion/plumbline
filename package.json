@@ -1,6 +1,6 @@
 {
   "name": "plumbline",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "type": "module",
   "description": "Verification infrastructure for AI-assisted work"
 }

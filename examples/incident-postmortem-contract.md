@@ -20,7 +20,6 @@ A postmortem document for a 47-minute payment processing outage caused by a conn
 ## Functional Verification
 
 - [ ] `[auto]` All required sections are present: Summary, Impact, Timeline, Root Cause Analysis, Contributing Factors, Action Items
-  <!-- verify: grep -n "^## " FILE and check that all six section headers are present -->
 - [ ] `[auto]` Timeline has at least 5 entries with timestamps in ISO 8601 format
   <!-- verify: grep -cE "\d{4}-\d{2}-\d{2}T\d{2}:\d{2}" FILE — must be >= 5 -->
 - [ ] `[auto]` Every action item has an owner and a due date
@@ -51,7 +50,7 @@ A postmortem document for a 47-minute payment processing outage caused by a conn
 - [ ] `[auto]` Tone is blameless — no individual names appear in the Root Cause Analysis or Contributing Factors sections
   <!-- verify: extract Root Cause Analysis and Contributing Factors sections, grep for @mentions or capitalized proper nouns that could be person names. Must return empty -->
 - [ ] `[auto]` Action items are specific and measurable, not vague ("improve monitoring" vs "add alert for connection pool utilization > 80%")
-  <!-- verify: grep -i "improve\|better\|more\|enhance\|consider" in Action Items section — vague verbs should be absent or minimal -->
+  <!-- verify: read the Action Items section and determine whether each item specifies a concrete deliverable with measurable criteria, not vague verbs like "improve", "enhance", or "consider" -->
 
 ## Contextual Verification
 

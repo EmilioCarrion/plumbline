@@ -4,6 +4,7 @@ verified: 2026-03-16
 verdict: pass
 auto_passed: 10
 auto_total: 10
+auto_skipped: 0
 manual_passed: 3
 manual_total: 3
 ---

@@ -24,6 +24,7 @@ sources:
     queries: ["relevant search queries used"]
 created: YYYY-MM-DD
 status: pending          # pending | verified | failed
+report:                  # set by verify — e.g., <name>-report.md
 ---
 ```
 
@@ -32,6 +33,7 @@ status: pending          # pending | verified | failed
 - `sources` (required): List of information sources consumed during generation. Each has a `type` and either `ref` (for issues), `paths` (for codebase/docs), or `queries` (for domain research)
 - `created` (required): Date the contract was generated
 - `status` (required): Current lifecycle state
+- `report` (optional): Filename of the verification report, set by `plumbline:verify` after verification
 
 ### Markdown Body
 
@@ -47,21 +49,19 @@ the verifier (human or agent) enough context to understand the checks.
 Checks that verify the task does what it's supposed to do.
 
 - [ ] `[auto]` Description of an automatically verifiable check
-  <!-- verify: command or instruction the agent host should execute -->
+  <!-- verify: optional — command, analytical instruction, or web-verify -->
 - [ ] `[manual]` Description of a check requiring human judgment
 
 ## Craft Verification
 Checks that verify quality, maintainability, and design.
 
 - [ ] `[auto]` Description
-  <!-- verify: command -->
 - [ ] `[manual]` Description
 
 ## Contextual Verification
 Checks that verify the change works in the real system context.
 
 - [ ] `[auto]` Description
-  <!-- verify: command -->
 - [ ] `[manual]` Description
 ```
 
@@ -69,7 +69,12 @@ Checks that verify the change works in the real system context.
 
 Each check is a Markdown checkbox list item with a type tag:
 
-- **`[auto]`** — Can be verified by an agent: executing a command, reading and analyzing content, comparing documents, checking structure, or any other deterministic evaluation. The execution hint is an HTML comment on the next line: `<!-- verify: <instruction> -->`. The instruction can be a shell command, an API call, a file inspection, or an analytical instruction the agent can follow (e.g., "read both files and verify equivalent section structure"). **Execution hint compatibility:** Use POSIX-compatible commands (`grep`, `wc`, `test`, `head`, `awk`). Avoid `grep -P` (Perl regex, not available on macOS) — prefer `grep -E`. Only use ecosystem-specific tools (`npx`, `cargo`, `python -m`) when the corresponding build system is detected in the project.
+- **`[auto]`** — Can be verified by an agent using available tools (shell commands, file reading, web search, analytical evaluation). An execution hint (`<!-- verify: ... -->`) is OPTIONAL. When included, it must be one of three forms:
+  - **Command:** A POSIX-compatible shell command (e.g., `grep -E "pattern" file`). Avoid `grep -P` (not available on macOS). Only use ecosystem tools (`npx`, `cargo`) when the build system is detected.
+  - **Analytical:** An instruction the agent follows by reading and evaluating (e.g., `read [section] and determine whether [criterion]`).
+  - **Web-verify:** A web search instruction (e.g., `web-verify: search [query] and verify [fact]`).
+
+  If the criterion is specific enough that verification is obvious (e.g., "POST /auth/login returns 401"), the hint may be omitted. If you cannot express the hint in one of these three forms, the check should probably be `[manual]`.
 - **`[manual]`** — Requires human aesthetic or subjective judgment that an agent cannot reliably evaluate (tone, rhetorical impact, memorability). Must include an inline rubric as an HTML comment with a 1-4 scale and acceptance threshold.
 
 ### Manual Check Rubric Format
