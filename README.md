@@ -14,6 +14,20 @@ Plumbline closes that gap.
 
 Two phases. One before you build, one after.
 
+```mermaid
+graph LR
+    A[Task / Issue] --> B["/plumbline:contract"]
+    B --> C[Build your way]
+    C --> D["/plumbline:verify"]
+    D --> E{All checks pass?}
+    E -->|Yes| F[Done]
+    E -->|No| C
+
+    style B fill:#475569,stroke:#334155,color:#f8fafc
+    style D fill:#475569,stroke:#334155,color:#f8fafc
+    style F fill:#22c55e,stroke:#16a34a,color:#f8fafc
+```
+
 ### 1. Contract — define what success looks like
 
 ```
