@@ -1,3 +1,5 @@
+<img align="right" src="assets/plumbline.svg" width="64" height="420">
+
 # Plumbline
 
 **Generating is easy. Verifying is the work.**
