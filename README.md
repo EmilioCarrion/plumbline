@@ -112,6 +112,8 @@ Plumbline does not replace your existing tools — TDD, linters, code review, CI
 
 **Auto checks are deterministic; manual checks are not.** Auto checks produce the same result every time. Manual checks depend on human judgment, which is why they include rubrics — to make that judgment consistent and auditable, not to eliminate subjectivity.
 
+**External domain knowledge is not automatic.** When a task depends on real-world constraints (opening hours, API rate limits, regulations), the contract skill uses web search to discover them. This is probabilistic — it may miss constraints that don't surface in search results. For high-stakes domain-dependent tasks, independent domain expert review is recommended.
+
 **This is a developer tool, not a CI gate.** Plumbline runs in your local agent environment (currently Claude Code). It's designed to increase confidence before you commit, not to replace your test suite in a pipeline.
 
 ## Install

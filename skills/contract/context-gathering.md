@@ -9,7 +9,8 @@ Gather sources in this order. Each source builds on the previous:
 1. **Project docs** — establishes conventions, constraints, architecture
 2. **Codebase** — reveals existing patterns, dependencies, technical context
 3. **Issue/ticket** — defines what's being asked and why
-4. **User conversation** — fills gaps, resolves ambiguity, adds tacit knowledge
+4. **Domain research** — discovers external real-world constraints via web search
+5. **User conversation** — fills gaps, resolves ambiguity, adds tacit knowledge
 
 ## Source: Project Docs
 
@@ -51,6 +52,25 @@ Gather sources in this order. Each source builds on the previous:
 - Extract: what's being asked, acceptance criteria, constraints mentioned, related issues
 
 **Fallback:** If no MCP tools available or no issue referenced, ask the user to describe the task. Their description becomes the primary input.
+
+## Source: Domain Research
+
+**When to use:**
+When the task depends on external domain knowledge not available in the project or the user's head — travel, third-party APIs, regulations, hardware constraints, pricing, scheduling against real-world hours.
+
+Skip for pure code tasks where the codebase is the domain.
+
+**What to look for:**
+- Real-world constraints that affect the task (opening hours, seasonal availability, rate limits, legal requirements)
+- Domain-specific gotchas the user may not think to mention
+- Current data that could invalidate assumptions (prices, schedules, API versions)
+
+**How to consume:**
+- Use WebSearch to research domain-specific constraints relevant to the task
+- Focus searches on constraints and failure modes, not general background
+- Extract specific, verifiable facts that should become checks
+
+**Fallback:** If web search is unavailable or the task is purely project-internal, skip this source. Note in the contract context that external domain constraints were not researched.
 
 ## Source: User Conversation
 

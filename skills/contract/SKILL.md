@@ -35,13 +35,14 @@ Collect information from available sources in this order:
 1. Project docs (CLAUDE.md, ADRs, README)
 2. Codebase (relevant files, test patterns, project structure)
 3. Issue/ticket (if MCP tools available and issue referenced)
+4. Domain research (web search for external constraints, when task involves real-world dependencies)
 
 Announce what you found:
 > "I've reviewed the project context. Here's what I found: [brief summary of tech stack, conventions, relevant code areas]. Now I have a few questions to fill in the gaps."
 
 ## Step 2: Ask Clarifying Questions
 
-Based on gaps found in step 1, ask targeted questions — one at a time. Cover all three dimensions:
+Based on gaps found in step 1, ask targeted questions — one at a time. When domain research surfaced external constraints, use them to ask more specific questions (e.g., "El Rastro closes at 15:00 on Sundays — should we schedule it in the morning?"). Cover all three dimensions:
 
 - **Functional:** What should happen? What are the edge cases? What's the happy path?
 - **Craft:** What quality standards apply? What patterns should be followed? What should be avoided?
