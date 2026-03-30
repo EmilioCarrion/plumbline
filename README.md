@@ -1,4 +1,4 @@
-<img align="right" src="assets/plumbline.svg" width="64" height="420">
+<img align="right" src="assets/plumbline.svg" width="64" height="320">
 
 # Plumbline
 
